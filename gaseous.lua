@@ -18,7 +18,7 @@ local steam = {name = modname .. ":steam"}
 nodecore.register_abm({
      label = "gaseous:lighter than air",
      nodenames = {"group:gaseous"},
-     interval = 1,
+     interval = 4,
      chance = 1,
      action = function(pos, node)
           local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
@@ -42,7 +42,7 @@ nodecore.register_abm({
 nodecore.register_abm({
 		label = "gaseous:dissapation",
 		interval = 2,
-		chance = 1,
+		chance = 2,
 		nodenames = {modname .. ":steam"},
 		action = function(pos, node)
           local pressure = #nodecore.find_nodes_around(pos, "group:steam")

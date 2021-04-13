@@ -53,8 +53,8 @@ minetest.register_node(modname ..":steam_dense", {
 --------------------Steam Node Generation--------------------
 nodecore.register_limited_abm({
 		label = "generate steam:direct",
-		interval = 2,
-		chance = 1,
+		interval = 20,
+		chance = 2,
 		nodenames = {"group:water"},
 		neighbors = {"group:igniter"},
 		action = function(pos)
@@ -69,8 +69,8 @@ nodecore.register_limited_abm({
 	
 nodecore.register_limited_abm({
 		label = "generate steam:boiler",
-		interval = 2,
-		chance = 1,
+		interval = 8,
+		chance = 2,
 		nodenames = {"group:water"},
 		action = function(pos)
 			local above = {x = pos.x, y = pos.y + 1, z = pos.z}
