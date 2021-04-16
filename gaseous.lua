@@ -18,7 +18,7 @@ local steam = {name = modname .. ":steam"}
 nodecore.register_abm({
      label = "gaseous:lighter than air",
      nodenames = {"group:gaseous"},
-     interval = 4,
+     interval = 3,
      chance = 1,
      action = function(pos, node)
           local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
@@ -37,6 +37,52 @@ nodecore.register_abm({
           end
      end,
 })
+----- ----- Lighter Than Water ----- -----
+nodecore.register_abm({
+     label = "gaseous:lighter than water",
+     nodenames = {"group:gaseous"},
+     interval = 2,
+     chance = 1,
+     action = function(pos, node)
+          local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
+		local next_node = minetest.get_node(next_pos)
+			if next_node.name == "nc_terrain:water_flowing" then
+				minetest.swap_node(next_pos, steam)
+				minetest.swap_node(pos, next_node)
+			else 
+			     local dir = directions[math.random(1,4)]
+				local next_pos = vector.add(pos, dir)
+				local next_node = minetest.get_node(next_pos)	
+				     if next_node.name == "nc_terrain:water_flowing" then
+				          minetest.swap_node(next_pos, steam)
+				          minetest.swap_node(pos, next_node)
+               end
+          end
+     end,
+})
+
+nodecore.register_abm({
+     label = "gaseous:lighter than water source",
+     nodenames = {"group:gaseous"},
+     interval = 2,
+     chance = 1,
+     action = function(pos, node)
+          local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
+		local next_node = minetest.get_node(next_pos)
+			if next_node.name == "nc_terrain:water_source" then
+				minetest.swap_node(next_pos, steam)
+				minetest.swap_node(pos, next_node)
+			else 
+			     local dir = directions[math.random(1,4)]
+				local next_pos = vector.add(pos, dir)
+				local next_node = minetest.get_node(next_pos)	
+				     if next_node.name == "nc_terrain:water_source" then
+				          minetest.swap_node(next_pos, steam)
+				          minetest.swap_node(pos, next_node)
+               end
+          end
+     end,
+})
 
 ----- ----- Gaseous Dissapation ----- -----
 nodecore.register_abm({
@@ -47,7 +93,20 @@ nodecore.register_abm({
 		action = function(pos, node)
           local pressure = #nodecore.find_nodes_around(pos, "group:steam")
           local airway = #nodecore.find_nodes_around(pos, "air")
-               if pressure < 2 and airway > 2 then
+               if pressure < 4 and airway > 2 then
+		     nodecore.set_node(pos, {name = "air"})
+          end
+	end	
+})
+
+nodecore.register_abm({
+		label = "thin atmoshpere",
+		interval = 3,
+		chance = 2,
+		nodenames = {modname .. ":steam"},
+		action = function(pos, node)
+		local altitude = pos.y
+               if altitude > 120 and airway > 1 then
 		     nodecore.set_node(pos, {name = "air"})
           end
 	end	
