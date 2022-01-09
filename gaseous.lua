@@ -18,8 +18,8 @@ local steam = {name = modname .. ":steam"}
 nodecore.register_abm({
      label = "gaseous:lighter than air",
      nodenames = {"group:gaseous"},
-     interval = 3,
-     chance = 1,
+     interval = 2,
+     chance = 2,
      action = function(pos, node)
           local next_pos = {x=pos.x, y=pos.y+1, z=pos.z}
 		local next_node = minetest.get_node(next_pos)
@@ -87,8 +87,8 @@ nodecore.register_abm({
 ----- ----- Gaseous Dissapation ----- -----
 nodecore.register_abm({
 		label = "gaseous:dissapation",
-		interval = 2,
-		chance = 2,
+		interval = 1,
+		chance = 10,
 		nodenames = {modname .. ":steam"},
 		action = function(pos, node)
           local pressure = #nodecore.find_nodes_around(pos, "group:steam")
@@ -101,8 +101,8 @@ nodecore.register_abm({
 
 nodecore.register_abm({
 		label = "thin atmoshpere",
-		interval = 3,
-		chance = 2,
+		interval = 1,
+		chance = 1,
 		nodenames = {modname .. ":steam"},
 		action = function(pos, node)
 		local altitude = pos.y
